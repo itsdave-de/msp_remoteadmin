@@ -1,0 +1,60 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-05-31 12:24:01.529877",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "guacamole_server",
+  "guacamole_user",
+  "guacamole_pass"
+ ],
+ "fields": [
+  {
+   "fieldname": "guacamole_server",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Guacamole server",
+   "reqd": 1
+  },
+  {
+   "fieldname": "guacamole_user",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Username",
+   "reqd": 1
+  },
+  {
+   "fieldname": "guacamole_pass",
+   "fieldtype": "Password",
+   "in_list_view": 1,
+   "label": "Password",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-05-31 12:24:01.529877",
+ "modified_by": "Administrator",
+ "module": "MSP Remoteadmin",
+ "name": "Remote Connections Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
