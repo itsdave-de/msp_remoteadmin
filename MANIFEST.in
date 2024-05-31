@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include msp_remoteadmin *.css
+recursive-include msp_remoteadmin *.csv
+recursive-include msp_remoteadmin *.html
+recursive-include msp_remoteadmin *.ico
+recursive-include msp_remoteadmin *.js
+recursive-include msp_remoteadmin *.json
+recursive-include msp_remoteadmin *.md
+recursive-include msp_remoteadmin *.png
+recursive-include msp_remoteadmin *.py
+recursive-include msp_remoteadmin *.svg
+recursive-include msp_remoteadmin *.txt
+recursive-exclude msp_remoteadmin *.pyc
