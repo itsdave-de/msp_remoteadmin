@@ -22,6 +22,7 @@ def create_session(doc, protocol):
         'password': guaca_config.get_password('guacamole_pass')
     }
     response = requests.post(guacamole_url, data=auth)
+    print(f"Response CODE: {response.status_code}\nResponde Content: {response.text}")
     if response.status_code == 200:
         try:
             token = response.json()['authToken']
