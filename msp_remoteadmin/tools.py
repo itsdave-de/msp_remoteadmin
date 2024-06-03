@@ -29,18 +29,14 @@ def create_session(name, protocol):
             print("Error: Could not get token")
             token = None
         if token:
-            print(f"Token: {token}")
             # Get values from IT Object
             doc = frappe.get_doc('IT Object', name)
             # Get credentials from IT User Account
-            print(f"Values from form: {doc}")
-            print(f"Type: {type(doc.get('link'))}")
             acc_doc = frappe.get_doc('IT User Account', doc.get('link'))
-            print(f"Print doc values: {acc_doc}")
             username = acc_doc.username
             password = acc_doc.get_password('password')
             
-            uri = urllib.parse.quote_plus(f"{protocol}://{username if username else ''}{':' + password if password else ''}@{doc.main_ip}{':' + PROTOCOL_PORT[protocol]}").lower()
+            uri = urllib.parse.quote_plus(f"{protocol}://{username if username else ''}{':' + password if password else ''}@{doc.main_ip}{':' + str(PROTOCOL_PORT[protocol])}").lower()
             if protocol == 'RDP':
                 uri = f"{uri}/?ignore-cert=true&disable-audio=true"
             url = f'{guacamole_url}/?#/?token={token}&quickconnect={uri}'
