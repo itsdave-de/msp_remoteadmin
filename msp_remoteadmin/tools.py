@@ -43,7 +43,13 @@ def create_session(name, protocol):
             uri = f"{protocol}://{ip_address}{':' + str(PROTOCOL_PORT[protocol])}"
             if protocol == 'RDP':
                 uri = f"{uri}/?ignore-cert=true&disable-audio=true{'&username=' + username if username else ''}{'&password=' + password if password else ''}{'&domain=' + domain if domain else ''}"
-            elif (protocol == 'SSH' and (username or password)):
-                uri = f"{uri}/?{'&username=' + username if username else ''}{'&password=' + password if password else ''}"
+            elif protocol == 'SSH':
+                params = []
+                if username:
+                    params.append(f"username={username}")
+                if password:
+                    params.append(f"password={password}")
+                if params:
+                    uri = f"{uri}/?{'&'.join(params)}"
             url = f'{guaca_config.guacamole_server}/?#/?token={token}&quickconnect={urllib.parse.quote_plus(uri).lower()}'
             return url
