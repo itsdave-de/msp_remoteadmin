@@ -31,7 +31,7 @@ def create_session(doc, protocol):
         if token:
             print(f"Token: {token}")
             # Get credentials from IT User Account
-            print(f"Values from form: {str(doc.link)}")
+            print(f"Values from form: {doc}\nType: {type(doc.link)}")
             acc_doc = frappe.get_doc('IT User Account', doc.link)
             print(f"Print doc values: {acc_doc}")
             username = acc_doc.username
