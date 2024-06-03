@@ -1,14 +1,14 @@
 frappe.ui.form.on('IT Object', {
     refresh: function (frm) {
         if (frm.doc.link) {
-            frm.add_custom_button(__('Connect'), null, 'btn-rdp', null, 'btn-ssh');
-            frm.page.add_menu_item(__('RDP'), function () {
+            frm.add_custom_button(__('RDP'), function () {
                 connect_remote(frm, 'RDP');
-            }, 'btn-rdp');
+            }, '__("Connect")');
 
-            frm.page.add_menu_item(__('SSH'), function () {
+            frm.add_custom_button(__('SSH'), function () {
                 connect_remote(frm, 'SSH');
-            }, 'btn-ssh');
+            }, '__("Connect")');
+
         }
     }
 });
