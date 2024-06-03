@@ -35,8 +35,11 @@ def create_session(name, protocol):
             acc_doc = frappe.get_doc('IT User Account', doc.get('link'))
             username = acc_doc.username
             password = acc_doc.get_password('password')
+            # Get IP
+            ip_doc = frappe.get_doc('IP Address', doc.get('main_ip'))
+            ip_address = ip_doc.ip_address
             
-            uri = urllib.parse.quote_plus(f"{protocol}://{username if username else ''}{':' + password if password else ''}@{doc.main_ip}{':' + str(PROTOCOL_PORT[protocol])}").lower()
+            uri = urllib.parse.quote_plus(f"{protocol}://{username if username else ''}{':' + password if password else ''}@{ip_address}{':' + str(PROTOCOL_PORT[protocol])}").lower()
             if protocol == 'RDP':
                 uri = f"{uri}/?ignore-cert=true&disable-audio=true"
             url = f'{guaca_config.guacamole_server}/?#/?token={token}&quickconnect={uri}'
