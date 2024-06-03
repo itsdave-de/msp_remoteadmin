@@ -29,6 +29,7 @@ def create_session(doc, protocol):
             print("Error: Could not get token")
             token = None
         if token:
+            print(f"Token: {token}")
             # Get credentials from IT User Account
             acc_doc = frappe.get_doc('IT User Account', doc.link)
             print(f"Print doc values: {acc_doc}")
