@@ -1,16 +1,14 @@
 frappe.ui.form.on('IT Object', {
     refresh: function (frm) {
-        // Verifica se todos os campos necessários estão preenchidos
         if (frm.doc.link) {
-            // Adiciona o botão "Connect"
-            frm.add_custom_button(__('Connect'), null, 'btn-default', null, 'btn-connect');
+            frm.add_custom_button(__('Connect'), null, 'btn-rdp', null, 'btn-ssh');
             frm.page.add_menu_item(__('RDP'), function () {
                 connect_remote(frm, 'RDP');
-            }, 'btn-connect');
+            }, 'btn-rdp');
 
             frm.page.add_menu_item(__('SSH'), function () {
                 connect_remote(frm, 'SSH');
-            }, 'btn-connect');
+            }, 'btn-ssh');
         }
     }
 });
