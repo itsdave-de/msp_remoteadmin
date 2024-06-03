@@ -15,7 +15,7 @@ frappe.ui.form.on('IT Object', {
 
 function connect_remote(frm, type) {
     frappe.call({
-        method: "msp_removeadmin.tools.create_session",
+        method: "msp_remoteadmin.tools.create_session",
         args: {
             doc: frm.doc,
             protocol: type
