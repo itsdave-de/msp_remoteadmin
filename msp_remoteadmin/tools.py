@@ -40,8 +40,10 @@ def create_session(name, protocol):
             ip_doc = frappe.get_doc('IP Address', doc.get('main_ip'))
             ip_address = ip_doc.ip_address
             
-            uri = f"{protocol}://{username if username else ''}{':' + password if password else ''}@{ip_address}{':' + str(PROTOCOL_PORT[protocol])}"
+            uri = f"{protocol}://{ip_address}{':' + str(PROTOCOL_PORT[protocol])}"
             if protocol == 'RDP':
-                uri = f"{uri}/?ignore-cert=true&disable-audio=true{'&domain=' + domain if domain else ''}"
+                uri = f"{uri}/?ignore-cert=true&disable-audio=true{'&username=' + username if username else ''}{'&password=' + password if password else ''}{'&domain=' + domain if domain else ''}"
+            elif (protocol == 'SSH' and (username or password)):
+                uri = f"{uri}/?{'&username=' + username if username else ''}{'&password=' + password if password else ''}"
             url = f'{guaca_config.guacamole_server}/?#/?token={token}&quickconnect={urllib.parse.quote_plus(uri).lower()}'
             return url
