@@ -30,7 +30,7 @@ def create_session(doc, protocol):
             token = None
         if token:
             # Get credentials from IT User Account
-            acc_doc = frappe.get_doc('IT User Account', doc.title)
+            acc_doc = frappe.get_doc('IT User Account', doc.name)
             print(acc_doc)
             username = acc_doc.username
             password = acc_doc.get_password('password')
