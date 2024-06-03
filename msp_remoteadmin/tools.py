@@ -13,12 +13,12 @@ PROTOCOL_PORT = {
 @frappe.whitelist()
 def create_session(name, protocol):
     guaca_config = frappe.get_single('Remote Connections Settings')
-    guacamole_url = f'{guaca_config.guacamole_server}/api/tokens'
+    guacamole_api = f'{guaca_config.guacamole_server}/api/tokens'
     auth = {
         'username': guaca_config.guacamole_user,
         'password': guaca_config.get_password('guacamole_pass')
     }
-    response = requests.post(guacamole_url, data=auth)
+    response = requests.post(guacamole_api, data=auth)
     
     print(f"Response CODE: {response.status_code}\nResponde Content: {response.text}")
     
@@ -39,5 +39,5 @@ def create_session(name, protocol):
             uri = urllib.parse.quote_plus(f"{protocol}://{username if username else ''}{':' + password if password else ''}@{doc.main_ip}{':' + str(PROTOCOL_PORT[protocol])}").lower()
             if protocol == 'RDP':
                 uri = f"{uri}/?ignore-cert=true&disable-audio=true"
-            url = f'{guacamole_url}/?#/?token={token}&quickconnect={uri}'
+            url = f'{guaca_config.guacamole_server}/?#/?token={token}&quickconnect={uri}'
             return url
