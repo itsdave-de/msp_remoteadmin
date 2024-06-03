@@ -3,11 +3,11 @@ frappe.ui.form.on('IT Object', {
         if (frm.doc.link) {
             frm.add_custom_button(__('RDP'), function () {
                 connect_remote(frm, 'RDP');
-            }, '__("Connect")');
+            }, __("Connect"));
 
             frm.add_custom_button(__('SSH'), function () {
                 connect_remote(frm, 'SSH');
-            }, '__("Connect")');
+            }, __("Connect"));
 
         }
     }
