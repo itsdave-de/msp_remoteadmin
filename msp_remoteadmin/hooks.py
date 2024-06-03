@@ -215,3 +215,6 @@ app_license = "MIT"
 # auth_hooks = [
 #	"msp_remoteadmin.auth.validate"
 # ]
+app_include_js = [
+    "/assets/msp_remoteadmin/js/msp_remote.js"
+]
