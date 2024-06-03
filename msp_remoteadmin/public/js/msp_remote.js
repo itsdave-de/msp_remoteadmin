@@ -17,7 +17,7 @@ function connect_remote(frm, type) {
     frappe.call({
         method: "msp_remoteadmin.tools.create_session",
         args: {
-            doc: frm.doc,
+            name: frm.doc.name,
             protocol: type
         },
         callback: function (r) {

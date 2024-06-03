@@ -11,7 +11,7 @@ PROTOCOL_PORT = {
 }
 
 @frappe.whitelist()
-def create_session(doc, protocol):
+def create_session(name, protocol):
     guaca_config = frappe.get_single('Remote Connections Settings')
     guacamole_url = f'{guaca_config.guacamole_server}/api/tokens'
     auth = {
@@ -30,6 +30,8 @@ def create_session(doc, protocol):
             token = None
         if token:
             print(f"Token: {token}")
+            # Get values from IT Object
+            doc = frappe.get_doc('IT Object', name)
             # Get credentials from IT User Account
             print(f"Values from form: {doc}")
             print(f"Type: {type(doc.get('link'))}")
