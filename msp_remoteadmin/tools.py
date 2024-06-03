@@ -12,9 +12,6 @@ PROTOCOL_PORT = {
 
 @frappe.whitelist()
 def create_session(doc, protocol):
-    # DEBUG
-    print(f"Values from form: {doc}")
-
     guaca_config = frappe.get_single('Remote Connections Settings')
     guacamole_url = f'{guaca_config.guacamole_server}/api/tokens'
     auth = {
@@ -22,7 +19,9 @@ def create_session(doc, protocol):
         'password': guaca_config.get_password('guacamole_pass')
     }
     response = requests.post(guacamole_url, data=auth)
+    
     print(f"Response CODE: {response.status_code}\nResponde Content: {response.text}")
+    
     if response.status_code == 200:
         try:
             token = response.json()['authToken']
@@ -32,6 +31,7 @@ def create_session(doc, protocol):
         if token:
             print(f"Token: {token}")
             # Get credentials from IT User Account
+            print(f"Values from form: {doc}")
             acc_doc = frappe.get_doc('IT User Account', doc.link)
             print(f"Print doc values: {acc_doc}")
             username = acc_doc.username
