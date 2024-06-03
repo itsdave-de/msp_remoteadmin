@@ -51,5 +51,5 @@ def create_session(name, protocol):
                     params.append(f"password={password}")
                 if params:
                     uri = f"{uri}/?{'&'.join(params)}"
-            url = f'{guaca_config.guacamole_server}/?#/?token={token}&quickconnect={urllib.parse.quote_plus(uri)}'
+            url = f'{guaca_config.guacamole_server}/?#/?token={token}&quickconnect={urllib.parse.quote(uri)}'
             return url
