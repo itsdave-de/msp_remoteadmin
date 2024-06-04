@@ -14,7 +14,7 @@ PROTOCOL_PORT = {
 
 def log_guacamole_session(url, protocol, host, user):
     # Wait for guacamole to create the session
-    time.sleep(1.2)
+    time.sleep(1.8)
     # Debug
     print(f"DEBUG: New session -> Protocol: {protocol} :: Host: {host} :: User: {user}")
     # Set guacamole url
