@@ -220,7 +220,7 @@ app_include_js = [
 ]
 scheduler_events = {
     "cron": {
-        "*/1 * * * *": [
+        "* * * * *": [
             "msp_remoteadmin.tools.check_session_status"
         ]
     }
