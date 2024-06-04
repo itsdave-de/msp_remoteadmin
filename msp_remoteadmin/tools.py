@@ -52,7 +52,7 @@ def create_session(name, protocol):
                 if guaca_config.keyboard_layout:
                     params.append(f"server-layout={guaca_config.keyboard_layout}")
                 if params:
-                    uri = f"{uri}/?ignore-cert=true&disable-audio=true{'&'.join(params)}"
+                    uri = f"{uri}/?ignore-cert=true&disable-audio=true&{'&'.join(params)}"
             elif protocol == 'SSH':
                 params = []
                 if username:
