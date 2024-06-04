@@ -44,7 +44,7 @@ def check_session_status():
     guacamole_url = guaca_config.guacamole_server.replace('https:', 'http:').replace('/guacamole', '')
     
     # Get all active sessions in "Remote Connection Sessions" Doctype
-    active_sessions = frappe.get_all("Remote Connection Sessions", filters={"end_datetime": ["is", ""]}, fields=["name", "id"])
+    active_sessions = frappe.get_all("Remote Connection Sessions", filters={"end_datetime": ["is", "not set"]}, fields=["name", "id"])
     
     for session in active_sessions:
         session_id = session["id"]
