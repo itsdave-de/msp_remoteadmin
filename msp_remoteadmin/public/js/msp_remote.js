@@ -22,8 +22,9 @@ function connect_remote(frm, type) {
         },
         callback: function (r) {
             if (r.message) {
-                var url = r.message;
-                window.open(url, 'GuacamoleConsole', 'width=1024,height=768');
+                var url = r.message.url;
+                resolution = r.message.resolution.split('x');
+                window.open(url, 'GuacamoleConsole', 'width=' + resolution[0] + ',height=' + resolution[1]);
             }
         }
     })

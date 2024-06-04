@@ -49,7 +49,7 @@ def create_session(name, protocol):
                     params.append(f"password={password}")
                 if domain:
                     params.append(f"domain={domain}")
-                if guaca_config.keyboard_layout:
+                if guaca_config.get('keyboard_layout'):
                     params.append(f"server-layout={guaca_config.keyboard_layout}")
                 if params:
                     uri = f"{uri}/?ignore-cert=true&disable-audio=true&{'&'.join(params)}"
@@ -62,4 +62,4 @@ def create_session(name, protocol):
                 if params:
                     uri = f"{uri}/?{'&'.join(params)}"
             url = f'{guaca_config.guacamole_server}/?#/?token={token}&quickconnect={urllib.parse.quote(uri)}'
-            return url
+            return { 'url': url, 'resolution': guaca_config.resolution if guaca_config.get('resolution') else '800x600'}
