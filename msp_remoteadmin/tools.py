@@ -116,5 +116,5 @@ def create_session(name, protocol):
                 if params:
                     uri = f"{uri}/?{'&'.join(params)}"
             url = f'{guaca_config.guacamole_server}/?#/?token={token}&quickconnect={urllib.parse.quote(uri)}'
-            frappe.enqueue(log_guacamole_session, queue='short', url=guaca_config.guacamole_server, protocol=protocol, ip_address=ip_address, user=frappe.session.user)
+            frappe.enqueue(log_guacamole_session, queue='short', url=guaca_config.guacamole_server, protocol=protocol, host=ip_address, user=frappe.session.user)
             return { 'url': url, 'resolution': guaca_config.resolution if guaca_config.get('resolution') else '800x600'}
