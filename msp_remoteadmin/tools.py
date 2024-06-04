@@ -37,7 +37,7 @@ def log_guacamole_session(url, protocol, host, user):
     else:
         last_id = 0
 
-@frappe.whitelist(guest=True)
+@frappe.whitelist(allow_guest=True)
 def check_session_status():
     # URL from guacamole server
     guaca_config = frappe.get_single('Remote Connections Settings')
