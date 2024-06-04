@@ -42,7 +42,17 @@ def create_session(name, protocol):
             
             uri = f"{protocol.lower()}://{ip_address}{':' + str(PROTOCOL_PORT[protocol])}"
             if protocol == 'RDP':
-                uri = f"{uri}/?ignore-cert=true&disable-audio=true{'&username=' + username if username else ''}{'&password=' + password if password else ''}{'&domain=' + domain if domain else ''}"
+                params = []
+                if username:
+                    params.append(f"username={username}")
+                if password:
+                    params.append(f"password={password}")
+                if domain:
+                    params.append(f"domain={domain}")
+                if guaca_config.keyboard_layout:
+                    params.append(f"server-layout={guaca_config.keyboard_layout}")
+                if params:
+                    uri = f"{uri}/?ignore-cert=true&disable-audio=true{'&'.join(params)}"
             elif protocol == 'SSH':
                 params = []
                 if username:
