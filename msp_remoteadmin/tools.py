@@ -139,4 +139,5 @@ def create_session(name, protocol):
                     'user': frappe.session.user,
                     'ip_user': frappe.local.request_ip
                 }
+            )
             return { 'url': url, 'resolution': guaca_config.resolution if guaca_config.get('resolution') else '800x600'}
