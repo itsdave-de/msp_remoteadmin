@@ -19,7 +19,7 @@ def log_start_session(session_id, start_time):
         doc = frappe.get_doc({
             "doctype": "Remote Connection Sessions",
             "id": session_id,
-            "start_datetime": datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
+            "start_datetime": datetime.strptime(start_time, "%Y-%m-%dT%H:%M:%S.%f")
         })
         doc.insert()
         frappe.db.commit()
@@ -41,7 +41,7 @@ def log_end_session(session_id, end_time):
     )
     if active_session:
         doc = frappe.get_doc("Remote Connection Sessions", active_session[0]["name"])
-        doc.end_datetime = datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S")
+        doc.end_datetime = datetime.strptime(end_time, "%Y-%m-%dT%H:%M:%S.%f")
         doc.save()
         frappe.db.commit()
         frappe.logger().info(f"Session {session_id} ended and updated in Frappe")
