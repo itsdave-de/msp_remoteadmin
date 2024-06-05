@@ -13,9 +13,9 @@
   "protocol",
   "host",
   "user",
+  "ip_user",
   "start_datetime",
-  "end_datetime",
-  "ip_user"
+  "end_datetime"
  ],
  "fields": [
   {
@@ -26,13 +26,11 @@
   {
    "fieldname": "protocol",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Protocol"
   },
   {
    "fieldname": "host",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Host"
   },
   {
@@ -56,18 +54,20 @@
   {
    "fieldname": "it_object",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "IT Object",
    "options": "IT Object"
   },
   {
    "fieldname": "ip_user",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "User IP"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-05 15:26:21.118023",
+ "modified": "2024-06-05 15:30:28.010684",
  "modified_by": "Administrator",
  "module": "MSP Remoteadmin",
  "name": "Remote Connection Sessions",
