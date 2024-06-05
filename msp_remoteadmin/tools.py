@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import time
+from datetime import datetime
 import frappe
 from frappe.utils import now
 import requests
@@ -18,7 +19,7 @@ def log_start_session(session_id, start_time):
         doc = frappe.get_doc({
             "doctype": "Remote Connection Sessions",
             "id": session_id,
-            "start_datetime": start_time
+            "start_datetime": datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
         })
         doc.insert()
         frappe.db.commit()
@@ -40,7 +41,7 @@ def log_end_session(session_id, end_time):
     )
     if active_session:
         doc = frappe.get_doc("Remote Connection Sessions", active_session[0]["name"])
-        doc.end_datetime = end_time
+        doc.end_datetime = datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S")
         doc.save()
         frappe.db.commit()
         frappe.logger().info(f"Session {session_id} ended and updated in Frappe")
