@@ -50,7 +50,7 @@ def log_end_session(session_id, end_time):
         frappe.logger().error(f"Session {session_id} not found in Frappe")
         return False
 
-def log_guacamole_session(url, protocol, host, user):
+def log_guacamole_session(session_data):
     # Wait for guacamole to create the session
     time.sleep(1.8)
     active_sessions = frappe.get_all(
@@ -66,9 +66,11 @@ def log_guacamole_session(url, protocol, host, user):
     for session in active_sessions:
         try:
             doc = frappe.get_doc("Remote Connection Sessions", session["name"])
-            doc.protocol = protocol
-            doc.host = host
-            doc.user = user
+            doc.it_object = session_data['it_object']
+            doc.protocol = session_data['protocol']
+            doc.host = session_data['host']
+            doc.user = session_data['user']
+            doc.ip_user = session_data['ip_user']
             doc.save()
             frappe.db.commit()
             frappe.logger().info(f"Session {session['id']} updated in Frappe")
@@ -127,5 +129,14 @@ def create_session(name, protocol):
                 if params:
                     uri = f"{uri}/?{'&'.join(params)}"
             url = f'{guaca_config.guacamole_server}/?#/?token={token}&quickconnect={urllib.parse.quote(uri)}'
-            frappe.enqueue(log_guacamole_session, queue='short', url=guaca_config.guacamole_server, protocol=protocol, host=ip_address, user=frappe.session.user)
+            frappe.enqueue(
+                log_guacamole_session, 
+                queue='short', 
+                session_data={
+                    'it_object': doc.name,
+                    'protocol': protocol,
+                    'host': ip_address,
+                    'user': frappe.session.user,
+                    'ip_user': frappe.local.request_ip
+                }
             return { 'url': url, 'resolution': guaca_config.resolution if guaca_config.get('resolution') else '800x600'}
