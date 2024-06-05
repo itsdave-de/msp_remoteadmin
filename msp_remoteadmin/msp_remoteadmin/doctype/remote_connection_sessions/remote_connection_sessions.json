@@ -1,0 +1,93 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:S-{id}",
+ "creation": "2024-06-04 23:06:56.273555",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "id",
+  "it_object",
+  "protocol",
+  "host",
+  "user",
+  "start_datetime",
+  "end_datetime",
+  "ip_user"
+ ],
+ "fields": [
+  {
+   "fieldname": "id",
+   "fieldtype": "Data",
+   "label": "ID"
+  },
+  {
+   "fieldname": "protocol",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Protocol"
+  },
+  {
+   "fieldname": "host",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Host"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "User"
+  },
+  {
+   "fieldname": "start_datetime",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_datetime",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "End Date"
+  },
+  {
+   "fieldname": "it_object",
+   "fieldtype": "Link",
+   "label": "IT Object",
+   "options": "IT Object"
+  },
+  {
+   "fieldname": "ip_user",
+   "fieldtype": "Data",
+   "label": "User IP"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-06-05 15:26:21.118023",
+ "modified_by": "Administrator",
+ "module": "MSP Remoteadmin",
+ "name": "Remote Connection Sessions",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
