@@ -30,7 +30,7 @@ def log_start_session(session_id, start_time):
     
 @frappe.whitelist(allow_guest=True)
 def log_end_session(session_id, end_time):
-    active_session = frappe.get_last(
+    active_session = frappe.get_all(
         "Remote Connection Sessions",
         filters={
             "session_id": session_id, 
@@ -39,7 +39,7 @@ def log_end_session(session_id, end_time):
         fields=["name"]
     )
     if active_session:
-        doc = frappe.get_doc("Remote Connection Sessions", active_session["name"])
+        doc = frappe.get_doc("Remote Connection Sessions", active_session[0]["name"])
         doc.end_datetime = end_time
         doc.save()
         frappe.db.commit()
