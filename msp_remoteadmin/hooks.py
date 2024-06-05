@@ -218,10 +218,3 @@ app_license = "MIT"
 app_include_js = [
     "/assets/msp_remoteadmin/js/msp_remote.js"
 ]
-scheduler_events = {
-    "cron": {
-        "* * * * *": [
-            "msp_remoteadmin.tools.check_session_status"
-        ]
-    }
-}

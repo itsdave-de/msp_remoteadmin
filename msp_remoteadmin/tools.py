@@ -12,57 +12,67 @@ PROTOCOL_PORT = {
     "RDP": 3389
 }
 
+@frappe.whitelist(allow_guest=True)
+def log_start_session(session_id, start_time):
+    try:
+        doc = frappe.get_doc({
+            "doctype": "Remote Connection Sessions",
+            "session_id": session_id,
+            "start_datetime": start_time
+        })
+        doc.insert()
+        frappe.db.commit()
+        frappe.logger().info(f"Session {session_id} started and saved in Frappe")
+        return True
+    except Exception as e:
+        frappe.logger().error(f"Error saving session {session_id}: {str(e)}")
+        return False
+    
+@frappe.whitelist(allow_guest=True)
+def log_end_session(session_id, end_time):
+    active_session = frappe.get_last(
+        "Remote Connection Sessions",
+        filters={
+            "session_id": session_id, 
+            "end_datetime": ["is", "not set"]
+        },
+        fields=["name"]
+    )
+    if active_session:
+        doc = frappe.get_doc("Remote Connection Sessions", active_session["name"])
+        doc.end_datetime = end_time
+        doc.save()
+        frappe.db.commit()
+        frappe.logger().info(f"Session {session_id} ended and updated in Frappe")
+        return True
+    else:
+        frappe.logger().error(f"Session {session_id} not found in Frappe")
+        return False
+
 def log_guacamole_session(url, protocol, host, user):
     # Wait for guacamole to create the session
     time.sleep(1.8)
-    # Debug
-    print(f"DEBUG: New session -> Protocol: {protocol} :: Host: {host} :: User: {user}")
-    # Set guacamole url
-    guacamole_url = url.replace('https:', 'http:').replace('/guacamole', '')
-    # Get last id created on guacamole
-    last_id = requests.get(f'{guacamole_url}:8085/last_id')
-    if last_id.status_code == 200:
-        last_id = last_id.json()['last_id']
-        # add log session
-        doc = frappe.new_doc('Remote Connection Sessions')
-        doc.id = last_id
-        doc.protocol = protocol
-        doc.host = host
-        doc.user = user
-        doc.start_datetime = time.strftime('%Y-%m-%d %H:%M:%S')
-        doc.insert()
-        doc.save()
-        frappe.db.commit()
-        frappe.logger().info(f"Session {last_id} created and updated in Frappe")
-    else:
-        last_id = 0
-
-@frappe.whitelist(allow_guest=True)
-def check_session_status():
-    # URL from guacamole server
-    guaca_config = frappe.get_single('Remote Connections Settings')
-    guacamole_url = guaca_config.guacamole_server.replace('https:', 'http:').replace('/guacamole', '')
-    
-    # Get all active sessions in "Remote Connection Sessions" Doctype
-    active_sessions = frappe.get_all("Remote Connection Sessions", filters={"end_datetime": ["is", "not set"]}, fields=["name", "id"])
-    
+    active_sessions = frappe.get_all(
+        "Remote Connection Sessions", 
+        filters={
+            "protocol": ["is", "not set"],
+            "host": ["is", "not set"],
+            "user": ["is", "not set"],
+            "end_datetime": ["is", "not set"]
+        }, 
+        fields=["name", "id"]
+    )
     for session in active_sessions:
-        session_id = session["id"]
         try:
-            response = requests.get(f"{guacamole_url}:8085/session/{session_id}")
-            response_data = response.json()
-            
-            # Verify if the session was ended
-            if "end" in response_data.keys():
-                # Update the "end_datetime" field of the corresponding document
-                doc = frappe.get_doc("Remote Connection Sessions", session["name"])
-                doc.end_datetime = now()
-                doc.save()
-                frappe.db.commit()
-                frappe.logger().info(f"Session {session_id} ended and updated in Frappe")
+            doc = frappe.get_doc("Remote Connection Sessions", session["name"])
+            doc.protocol = protocol
+            doc.host = host
+            doc.user = user
+            doc.save()
+            frappe.db.commit()
+            frappe.logger().info(f"Session {session['id']} updated in Frappe")
         except Exception as e:
-            frappe.logger().error(f"Error checking session {session_id}: {str(e)}")
-
+            frappe.logger().error(f"Error updating session {session['id']}: {str(e)}")
 
 @frappe.whitelist()
 def create_session(name, protocol):
