@@ -17,7 +17,7 @@ def log_start_session(session_id, start_time):
     try:
         doc = frappe.get_doc({
             "doctype": "Remote Connection Sessions",
-            "session_id": session_id,
+            "id": session_id,
             "start_datetime": start_time
         })
         doc.insert()
