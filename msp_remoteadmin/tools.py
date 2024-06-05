@@ -33,7 +33,7 @@ def log_end_session(session_id, end_time):
     active_session = frappe.get_all(
         "Remote Connection Sessions",
         filters={
-            "session_id": session_id, 
+            "id": session_id, 
             "end_datetime": ["is", "not set"]
         },
         fields=["name"]
