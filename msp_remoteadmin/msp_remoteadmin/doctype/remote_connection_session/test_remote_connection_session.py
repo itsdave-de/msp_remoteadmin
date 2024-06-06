@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestRemoteConnectionSessions(FrappeTestCase):
+class TestRemoteConnectionSession(FrappeTestCase):
 	pass

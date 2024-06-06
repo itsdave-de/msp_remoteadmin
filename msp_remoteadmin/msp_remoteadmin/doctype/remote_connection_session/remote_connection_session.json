@@ -70,7 +70,7 @@
  "modified": "2024-06-05 15:30:28.010684",
  "modified_by": "Administrator",
  "module": "MSP Remoteadmin",
- "name": "Remote Connection Sessions",
+ "name": "Remote Connection Session",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
